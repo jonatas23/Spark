@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  spark:
+    image: java:8
+    container_name: sparkApplication
+    entrypoint:
+      - java
+      - -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=3005
+      - -jar
+      - /app.jar
+    volumes:
+      - ./target/spark-0.0.1-SNAPSHOT.jar:/app.jar
+    ports:
+      - "3010:3000"
+      - "3005:3005"
+    networks:
+      - spark-network
+    external_links:
+      - spark-master
+    restart: always
+
+networks:
+  spark-network:
+    external: true
