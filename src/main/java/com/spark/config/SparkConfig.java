@@ -27,8 +27,6 @@ public class SparkConfig {
 				.appName(appName)
 				.master(masterUri)
 				.config("spark.ui.port","4041")
-				.config("spark.serializer", KryoSerializer.class.getName())
-				.config("spark.kryo.registrator", GeoSparkKryoRegistrator.class.getName())
 				.getOrCreate();
 
 		GeoSparkSQLRegistrator.registerAll(sparkSession);

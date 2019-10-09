@@ -10,9 +10,10 @@ services:
       - /app.jar
     volumes:
       - ./target/spark-0.0.1-SNAPSHOT.jar:/app.jar
+      - ./biblia-em-txt.txt:/biblia-em-txt.txt
     ports:
       - "3010:3000"
-      - "3005:3005"
+      - "3015:3005"
     networks:
       - spark-network
     external_links:
