@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   spark:
-    image: java:8
+    image: jonatasedward/spark_base
     container_name: sparkApplication
     entrypoint:
       - java

@@ -3,6 +3,7 @@ package com.spark.service;
 import com.spark.model.Wkt;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,19 @@ public class GeoSparkService {
         return listwkt;
     }
 
-    public void stIntersects(){
+    public List<Wkt> stIntersects(){
         Dataset<Row> rowWkt = sparkSession.createDataFrame(listWkt(), Wkt.class);
         Dataset<Row> wkts = rowWkt.filter("ST_Intersects(st_geomFromWKT(wkt), st_geomFromWKT('" + this.wkt + "'))");
 
         wkts.show();
+        return wkts.as(Encoders.bean(Wkt.class)).collectAsList();
     }
 
-    public void stContains(){
+    public List<Wkt> stContains(){
         Dataset<Row> rowWkt = sparkSession.createDataFrame(listWkt(), Wkt.class);
         Dataset<Row> wkts = rowWkt.filter("ST_Contains(st_geomFromWKT(wkt), st_geomFromWKT('" + this.wkt + "'))");
 
         wkts.show();
+        return wkts.as(Encoders.bean(Wkt.class)).collectAsList();
     }
 }

@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  spark:
+    image: jonatasedward/spark_base
+    container_name: spark-master
+    environment:
+      SPARK_MASTER_PORT: 7077
+      SPARK_MASTER_WEBUI_PORT: 8080
+      SPARK_MASTER_LOG: /spark/logs
+    command: ["/bin/bash", "/master.sh"]
+    volumes:
+      - ./master.sh:/master.sh
+    ports:
+      - "4049:4040"
+      - "8099:8080"
+      - "7079:7077"
+    networks:
+      - spark-network
+    restart: always
+
+networks:
+  spark-network:
+    external: true
