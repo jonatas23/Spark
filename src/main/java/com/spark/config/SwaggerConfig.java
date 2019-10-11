@@ -33,7 +33,7 @@ public class SwaggerConfig {
 
         ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
 
-        apiInfoBuilder.title("Spreing Boot + Apache Spark ");
+        apiInfoBuilder.title("Spring Boot + Apache Spark ");
         apiInfoBuilder.description("API para controle");
         apiInfoBuilder.version("1.0");
         apiInfoBuilder.termsOfServiceUrl("Termo de uso: Deve ser usada para estudos.");

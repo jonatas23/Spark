@@ -3,12 +3,20 @@ services:
   spark:
     image: jonatasedward/spark_base
     container_name: sparkApplication
+    environment:
+      SPARK_MASTER_NAME: spark-master
+      SPARK_MASTER_PORT: 7077
+      SPARK_APPLICATION_JAR_LOCATION: /app.jar
+      SPARK_APPLICATION_MAIN_CLASS: com.spark.SparkApplication
+      SPARK_APPLICATION_ARGS: "1000"
+    command: ["/bin/bash", "/submit.sh"]
     entrypoint:
       - java
       - -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=3005
       - -jar
       - /app.jar
     volumes:
+      - ./submit.sh:/submit.sh
       - ./target/spark-0.0.1-SNAPSHOT.jar:/app.jar
       - ./biblia-em-txt.txt:/biblia-em-txt.txt
     ports:

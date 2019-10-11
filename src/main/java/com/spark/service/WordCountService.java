@@ -2,8 +2,6 @@ package com.spark.service;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,7 @@ public class WordCountService {
 	@Autowired
 	public SparkSession sparkSession;
 
-	public Long mapName(String name) {
+	public Long countName(String name) {
 		try {
 			FileReader fr = new FileReader( "/biblia-em-txt.txt" );
 			BufferedReader br = new BufferedReader( fr );
@@ -53,7 +51,7 @@ public class WordCountService {
 		}
 	}
 
-	public Object mapReduceBiblia() {
+	public Object mapReduce() {
 		try {
 			FileReader fr = new FileReader( "/biblia-em-txt.txt" );
 			BufferedReader br = new BufferedReader( fr );
@@ -75,21 +73,34 @@ public class WordCountService {
 		}
 	}
 
-	public Object mapReduce(){
-		JavaRDD<String> biblia = sparkSession.read().textFile("/biblia-em-txt.txt").javaRDD();
-		return biblia.countByValue();
-	}
 
-	public Long countName(String name) {
-		JavaRDD<String> biblia = sparkSession.read().textFile("/biblia-em-txt.txt").javaRDD();
-
-		return biblia.filter(line -> {
-					if (line.contains(name))
-						return true;
-					else
-						return false;
-				})
-				.count();
-	}
-
+//	public Long countName(String name) {
+//		try {
+//			FileReader fr = new FileReader( "/biblia-em-txt.txt" );
+//			BufferedReader br = new BufferedReader( fr );
+//			List<String> wordList = new ArrayList<>();
+//
+//			while( br.ready() ) {
+//				List<String> linha = Arrays.asList(br.readLine().split(" "));
+//				linha.forEach(l -> wordList.add(l.replace(".", "").replace(":", "").replace(";", "").replace(",", "")));
+//			}
+//
+//			JavaRDD<String> words = sc.parallelize(wordList);
+//
+//			Map<String, Long> wordCounts = words.countByValue();
+//
+//			wordCounts.entrySet().stream().filter(k ->{
+//				if (k.getKey().contains(name))
+//					return true;
+//				else
+//					return false;
+//			});
+//
+//			return wordCounts.get(name);
+//
+//		} catch (IOException e) {
+//			System.out.println(e.getMessage());
+//			return 0l;
+//		}
+//	}
 }
