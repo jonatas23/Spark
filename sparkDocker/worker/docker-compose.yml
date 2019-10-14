@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  spark:
+  sparkWorker1:
     image: jonatasedward/spark_base
     container_name: sparkWorker1
     environment:
@@ -12,6 +12,23 @@ services:
       - ./worker.sh:/worker.sh
     ports:
       - "8081:8081"
+    networks:
+      - spark-network
+    external_links:
+      - spark-master
+    restart: always
+  sparkWorker2:
+    image: jonatasedward/spark_base
+    container_name: sparkWorker2
+    environment:
+      SPARK_WORKER_WEBUI_PORT: 8082
+      SPARK_WORKER_LOG: /spark/logs
+      SPARK_MASTER: "spark://spark-master:7077"
+    command: ["/bin/bash", "/worker.sh"]
+    volumes:
+      - ./worker.sh:/worker.sh
+    ports:
+      - "8082:8082"
     networks:
       - spark-network
     external_links:

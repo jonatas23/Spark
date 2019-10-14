@@ -14,12 +14,17 @@ public class WordCountController {
 	@Autowired
 	WordCountService service;
 
-	@RequestMapping(method = RequestMethod.POST, path = "/name")
+	@RequestMapping(method = RequestMethod.POST, path = "/countText")
 	public Long countText(@RequestParam(required = false) String name) {
 		return service.countName(name);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/mapBiblia")
+    @RequestMapping(method = RequestMethod.POST, path = "/contains")
+    public Object contains(@RequestParam(required = false) String name) {
+        return service.contains(name);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/mapBiblia")
 	public Object mapReduceBiblia() {
 		return service.mapReduce();
 	}
