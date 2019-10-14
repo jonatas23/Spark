@@ -11,9 +11,7 @@ services:
     volumes:
       - ./master.sh:/master.sh
     ports:
-      - "4049:4040"
-      - "8099:8080"
-      - "7079:7077"
+      - "8080:8080"
     networks:
       - spark-network
     restart: always

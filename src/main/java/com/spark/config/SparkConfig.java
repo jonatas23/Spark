@@ -26,7 +26,7 @@ public class SparkConfig {
 		SparkSession sparkSession = SparkSession.builder()
 				.appName(appName)
 				.master(masterUri)
-				.config("spark.ui.port","4041")
+				.config("spark.ui.port","4040")
 				.getOrCreate();
 
 		GeoSparkSQLRegistrator.registerAll(sparkSession);
